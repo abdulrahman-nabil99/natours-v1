@@ -22,7 +22,7 @@ export const app = express();
 
 // templete engine
 app.set('view engine', 'pug');
-app.set('views', '/views');
+app.set('views', `${__dirname}/views`);
 
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
