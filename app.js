@@ -16,6 +16,7 @@ import { tourRouter } from './routes/tourRoutes.js';
 import { userRouter } from './routes/userRoutes.js';
 import { reviewRouter } from './routes/reviewRoutes.js';
 import { bookingRouter } from './routes/bookingRoutes.js';
+import * as bookingController from './controllers/bookingController.js';
 import { AppError } from './utils/appError.js';
 import { errHandler } from './controllers/errorController.js';
 
@@ -32,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middlewares
 
 app.use(cors());
-app.options('*', cors())
+app.options('*', cors());
 // set Security http request
 const scriptSrcUrls = [
   'https://unpkg.com/',
@@ -84,6 +85,12 @@ app.use(
 //     'To many requests from this ip, please try again in an hour!',
 // });
 // app.use('/api', limiter);
+// stibe webhooks
+app.post(
+  'webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout,
+);
 
 // body parser
 app.use(express.json({ limit: '10kb' }));

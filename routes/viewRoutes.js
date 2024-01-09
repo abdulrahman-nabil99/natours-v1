@@ -7,7 +7,6 @@ export const viewRouter = express.Router();
 
 viewRouter.get(
   '/',
-  bookingController.createBookingCheckout,
   authController.isLoggedIn,
   viewController.getOverview,
 );
@@ -22,7 +21,11 @@ viewRouter.get(
   viewController.loginForm,
 );
 viewRouter.get('/me', authController.protect, viewController.getMe);
-viewRouter.get('/my-tours', authController.protect, viewController.getMyTours);
+viewRouter.get(
+  '/my-tours',
+  authController.protect,
+  viewController.getMyTours,
+);
 
 viewRouter.post(
   '/submit-user-data',
