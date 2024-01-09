@@ -19,6 +19,7 @@ import { AppError } from './utils/appError.js';
 import { errHandler } from './controllers/errorController.js';
 
 export const app = express();
+app.enable('trust proxy')
 
 // templete engine
 app.set('view engine', 'pug');

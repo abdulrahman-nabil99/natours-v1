@@ -11,7 +11,12 @@ process.on('unhandledRejection', (err) => {
   console.error(err.name, err.message);
   server.close(() => process.exit(1));
 });
-
+process.on('SIGTERM',()=>{
+  console.log(`SIGTERM Received, Shutting down gracefully 🏃‍♂️`);
+  server.close(()=>{
+    console.log('Process Terminated');
+  })
+})
 const db = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD,
