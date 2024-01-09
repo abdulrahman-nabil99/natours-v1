@@ -19,7 +19,9 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
     // cancel_url: `${req.protocol}://${req.get('host')}/tour/${
     //   tour.slug
     // }`,
-    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
+    success_url: `${req.protocol}://${req.get(
+      'host',
+    )}/my-tours?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${
       tour.slug
     }`,
@@ -35,7 +37,9 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
             name: `${tour.name} tour`,
             description: `${tour.summary}`,
             images: [
-              `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`,
+              `${req.protocol}://${req.get('host')}/img/tours/${
+                tour.imageCover
+              }`,
             ],
           },
         },
@@ -65,10 +69,9 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
 
 const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
-  const user = (await User.findOne({ email: session.customer_email }))
-    .id;
+  const user = await User.findOne({ email: session.customer_email });
   const price = session.amount_total / 100;
-  await Booking.create({ tour, user, price });
+  await Booking.create({ tour, user: user.id, price });
 };
 
 export const webhookCheckout = catchAsync(async (req, res, next) => {
