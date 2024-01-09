@@ -19,7 +19,7 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
     // cancel_url: `${req.protocol}://${req.get('host')}/tour/${
     //   tour.slug
     // }`,
-    success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${
       tour.slug
     }`,
@@ -35,9 +35,7 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
             name: `${tour.name} tour`,
             description: `${tour.summary}`,
             images: [
-              `${req.protocol}://${req.get('host')}/tours/${
-                tour.imageCover
-              }`,
+              `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`,
             ],
           },
         },
@@ -76,7 +74,7 @@ const createBookingCheckout = async (session) => {
 export const webhookCheckout = catchAsync(async (req, res, next) => {
   let event;
   try {
-    const signature = req.headers('stripe-signature');
+    const signature = req.headers['stripe-signature'];
     event = stripe.webhooks.constructEvent(
       req.body,
       signature,

@@ -5,6 +5,7 @@ import * as bookingController from '../controllers/bookingController.js';
 
 export const viewRouter = express.Router();
 
+viewRouter.use(viewController.alerts);
 viewRouter.get(
   '/',
   authController.isLoggedIn,
