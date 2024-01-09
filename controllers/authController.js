@@ -105,7 +105,6 @@ export const restrictTo = (...roles) => {
 
 export const forgetPassword = async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log(user);
   if (!user)
     return next(new AppError('The is no user with than email', 404));
   const resetToken = user.createPasswordResetToken();

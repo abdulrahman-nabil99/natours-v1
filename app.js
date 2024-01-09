@@ -4,6 +4,7 @@ const __dirname = path.dirname(__filename).slice(1);
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
@@ -104,7 +105,7 @@ app.use(
     ],
   }),
 );
-
+app.use(compression())
 //
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
