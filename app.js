@@ -1,6 +1,6 @@
 import path from 'node:path';
 const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename).slice(1);
+const __dirname = path.dirname(__filename);
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
