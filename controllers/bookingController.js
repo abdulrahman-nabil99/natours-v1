@@ -35,7 +35,9 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
             name: `${tour.name} tour`,
             description: `${tour.summary}`,
             images: [
-              'https://images.unsplash.com/photo-1634840884193-2f6cf2538871?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              `${req.protocol}://${req.get('host')}/tours/${
+                tour.imageCover
+              }`,
             ],
           },
         },

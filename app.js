@@ -87,7 +87,7 @@ app.use(
 // app.use('/api', limiter);
 // stibe webhooks
 app.post(
-  'webhook-checkout',
+  '/webhook-checkout',
   express.raw({ type: 'application/json' }),
   bookingController.webhookCheckout,
 );
