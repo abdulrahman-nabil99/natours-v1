@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
+import cors from 'cors';
 import xss from 'xss-clean';
 import hpp from 'hpp';
 import morgan from 'morgan';
@@ -19,7 +20,7 @@ import { AppError } from './utils/appError.js';
 import { errHandler } from './controllers/errorController.js';
 
 export const app = express();
-app.enable('trust proxy')
+app.enable('trust proxy');
 
 // templete engine
 app.set('view engine', 'pug');
@@ -29,6 +30,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middlewares
+
+app.use(cors());
+app.options('*', cors())
 // set Security http request
 const scriptSrcUrls = [
   'https://unpkg.com/',
@@ -73,13 +77,13 @@ app.use(
 );
 
 // rate limiter
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message:
-    'To many requests from this ip, please try again in an hour!',
-});
-app.use('/api', limiter);
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message:
+//     'To many requests from this ip, please try again in an hour!',
+// });
+// app.use('/api', limiter);
 
 // body parser
 app.use(express.json({ limit: '10kb' }));
