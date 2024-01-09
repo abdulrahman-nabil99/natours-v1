@@ -10,6 +10,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const checkoutSession = catchAsync(async (req, res, next) => {
   // Get tour
   const tour = await Tour.findById(req.params.tourId);
+  const user = await User.findById(req.user.id).select(
+    '+email +name',
+  );
   // create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -26,7 +29,7 @@ export const checkoutSession = catchAsync(async (req, res, next) => {
       tour.slug
     }`,
     mode: 'payment',
-    customer_email: req.user.email,
+    customer_email: user.email,
     client_reference_id: req.params.tourId,
     line_items: [
       {
